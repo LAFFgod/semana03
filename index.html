@@ -15,7 +15,15 @@
         var anterior = 0;
         var dt = 0;
         var pc = new Sprite({vx:10});
-        var pc2 = new Sprite({vx:-10, x:100});
+        var npc = []; 
+        var NNPC = 10000;
+        
+        for(var i=0; i<NNPC; i++){
+           npc[i]=  new Sprite({
+               x:Math.random()*canvas.height,
+               y:Math.random()*canvas.width
+            });
+        }
 
         function passo (t){
         dt = (t-anterior)/1000;
@@ -23,14 +31,20 @@
         ctx.fillRect(0,0,canvas.width,canvas.height);
         
         pc.mover(dt);
-        pc2.perseguir(pc);
-        pc2.mover(dt);
-        pc.desenhar(ctx);
-        pc2.desenhar(ctx);
-        if(pc.colidiuCom(pc2)){
-            pc2.x=Math.random()*canvas.height;
-            pc2.y=Math.random()*canvas.height;
+        for(var i=0; i<npc.length; i++){
+            npc[i].perseguir(pc);
+            npc[i].mover(dt);
         }
+
+        pc.desenhar(ctx);
+
+        for(var i=0; i<npc.length; i++){
+            npc[i].desenhar(ctx);
+            if(pc.colidiuCom(npc[i])){
+                npc[i].x=Math.random()*canvas.height;
+                npc[i].y=Math.random()*canvas.height;
+        }
+    }
         anterior= t;
         requestAnimationFrame(passo);    
     }
