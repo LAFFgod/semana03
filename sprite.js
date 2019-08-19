@@ -34,7 +34,10 @@ Sprite.prototype.colidiuCom=function(alvo){
         return false;
     if(alvo.x>this.x+this.w)
         return false;
-
+    if(alvo.y+alvo.w<this.y)
+        return false;
+    if(alvo.y>this.y+this.w)
+        return false;   
     return true;
 
 }
